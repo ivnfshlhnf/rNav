@@ -1,22 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, { Component } from "react";
+import { Provider } from "react-redux";
+import configureStore from "./src/store/configureStore";
 import { createStackNavigator } from "react-navigation";
 
 import LoginScreen from "./src/screens/LoginScreen";
-import MainScreenTab from './src/screens/MainScreenTab';
+import MainScreenTab from "./src/screens/MainScreenTab";
 
 export default class App extends Component {
   render() {
     return (
-      <AppStackNavigator/>
+      <Provider store={configureStore}>
+        <AppStackNavigator />
+      </Provider>
     );
   }
 }
@@ -24,4 +19,4 @@ export default class App extends Component {
 const AppStackNavigator = createStackNavigator({
   Login: LoginScreen,
   MainScreenTab: MainScreenTab
-})
+});

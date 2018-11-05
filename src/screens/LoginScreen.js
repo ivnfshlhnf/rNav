@@ -1,21 +1,30 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Button, TextInput } from "react-native";
+import { connect } from "react-redux";
+
+import { setUser } from "../store/actions/index";
 
 class LoginScreen extends Component {
   state = {
-    username: "",
-    email: ""
+    user: {
+      username: "",
+      email: ""
+    }
   };
 
   usernameChangedHandler = val => {
+    let user = this.state.user;
+    user.username = val;
     this.setState({
-      username: val
+      user: user
     });
   };
 
   emailChangedhandler = val => {
+    let user = this.state.user;
+    user.email = val;
     this.setState({
-      email: val
+      user: user
     });
   };
 
@@ -23,7 +32,8 @@ class LoginScreen extends Component {
     header: null
   };
 
-  onChangeScreenHandler = () => {
+  onUserLoginHandler = () => {
+    this.props.onUserLogin(this.state.user);
     this.props.navigation.navigate("Home");
   };
   render() {
@@ -45,15 +55,22 @@ class LoginScreen extends Component {
         </View>
         <Text>{this.state.username}</Text>
         <Text>{this.state.email}</Text>
-        <Button
-          title="go to Home Screen"
-          onPress={this.onChangeScreenHandler}
-        />
+        <Button title="Login" onPress={this.onUserLoginHandler} />
       </View>
     );
   }
 }
-export default LoginScreen;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onUserLogin: user => dispatch(setUser(user))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {

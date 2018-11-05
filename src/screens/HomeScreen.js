@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { View, Text, StyleSheet, Button } from "react-native";
 
 class HomeScreen extends Component {
@@ -11,14 +12,24 @@ class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>HomeScreen</Text>
+        <Text>{this.props.user.username}</Text>
         <Button title="go back 1" onPress={this.onGobackHandler} />
         <Button title="go back to top" onPress={this.onGobackToTopHandler} />
       </View>
     );
   }
 }
-export default HomeScreen;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(HomeScreen);
+
 
 const styles = StyleSheet.create({
   container: {
